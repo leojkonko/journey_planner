@@ -62,15 +62,15 @@ export async function createTrip(app: FastifyInstance) {
         },
       });
 
-      //  await prisma.participant.create({
-      //     data: {
-      //         trip_id: trip.id
-      //     }
-      // })
+      //   //  await prisma.participant.create({
+      //   //     data: {
+      //   //         trip_id: trip.id
+      //   //     }
+      //   // })
 
       const formattedStartDate = dayjs(starts_at).format("DD/MM/YYYY");
       const formattedEndDate = dayjs(ends_at).format("DD/MM/YYYY");
-      const confirmationLink = `${env.API_BASE_URL}/trips/${trip.id}/confirm`;
+      const confirmationLink = `${process.env.API_BASE_URL}/trips/${trip.id}/confirm`;
 
       const mail = await getmailClient();
 
