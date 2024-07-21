@@ -6,6 +6,7 @@ import dayjs from "dayjs"; //manipulaçao de datas
 import { getmailClient } from "../lib/mail";
 import nodemailer from "nodemailer";
 import { ClientError } from "../errors/client-error";
+import { env } from "../env";
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -71,7 +72,7 @@ export async function createTrip(app: FastifyInstance) {
 
       const formattedStartDate = dayjs(starts_at).format("DD/MM/YYYY");
       const formattedEndDate = dayjs(ends_at).format("DD/MM/YYYY");
-      const confirmationLink = `${process.env.API_BASE_URL}/trips/${trip.id}/confirm`;
+      const confirmationLink = `${env.API_BASE_URL}/trips/${trip.id}/confirm`;
 
       const mail = await getmailClient();
 

@@ -6,6 +6,7 @@ import { getmailClient } from "../lib/mail";
 import { prisma } from "../lib/prisma";
 import dayjs from "dayjs";
 import { ClientError } from "../errors/client-error";
+import { env } from "../env";
 
 export async function confirmTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -38,9 +39,7 @@ export async function confirmTrip(app: FastifyInstance) {
       }
 
       if (trip.is_confirmed) {
-        return reply.redirect(
-          `${process.env.API_BASE_URL_FRONTEND}/trips/${tripId}`
-        );
+        return reply.redirect(`${env.API_BASE_URL_FRONTEND}/trips/${tripId}`);
       }
 
       await prisma.trip.update({
@@ -55,7 +54,7 @@ export async function confirmTrip(app: FastifyInstance) {
 
       await Promise.all(
         trip.participants.map(async (participant) => {
-          const confirmationLink = `${process.env.API_BASE_URL}/participants/${participant.id}/confirm`;
+          const confirmationLink = `${env.API_BASE_URL}/participants/${participant.id}/confirm`;
 
           const message = await mail.sendMail({
             from: {
@@ -83,9 +82,7 @@ export async function confirmTrip(app: FastifyInstance) {
         })
       );
 
-      return reply.redirect(
-        `${process.env.API_BASE_URL_FRONTEND}/trips/${tripId}`
-      );
+      return reply.redirect(`${env.API_BASE_URL_FRONTEND}/trips/${tripId}`);
     }
   );
 }
