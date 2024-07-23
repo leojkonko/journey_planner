@@ -1,5 +1,5 @@
 import { AtSign, Plus, X } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 
 interface InviteGuestsModalProps {
   closeGuestModal: () => void;
