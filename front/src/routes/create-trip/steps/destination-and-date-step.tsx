@@ -9,20 +9,25 @@ interface DestinationAndDateStepProps {
   isGuestInputOpen: boolean;
   closeGuestInput: () => void;
   openGuestInput: () => void;
+  setDestination: React.Dispatch<React.SetStateAction<string>>;
+  setEventStartAndEndDates: (dates: DateRange | undefined) => void;
+  eventStartAndEndDates: DateRange | undefined;
 }
 
 function DestinationAndDateStep(props: DestinationAndDateStepProps) {
   const [openModal, setOpenModal] = useState(false);
 
-  const [eventStartAndEndDays, setEventStartAndEndDays] = useState<
-    DateRange | undefined
-  >();
+  // const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
+  //   DateRange | undefined
+  // >();
 
   const displayedDate =
-    eventStartAndEndDays && eventStartAndEndDays.from && eventStartAndEndDays.to
-      ? format(eventStartAndEndDays.from, "d 'de' LLL")
+    props.eventStartAndEndDates &&
+    props.eventStartAndEndDates.from &&
+    props.eventStartAndEndDates.to
+      ? format(props.eventStartAndEndDates.from, "d 'de' LLL")
           .concat(" até ")
-          .concat(format(eventStartAndEndDays.to, "d 'de' LLL"))
+          .concat(format(props.eventStartAndEndDates.to, "d 'de' LLL"))
       : null;
 
   return (
@@ -39,9 +44,8 @@ function DestinationAndDateStep(props: DestinationAndDateStepProps) {
               </div>
               <DayPicker
                 mode="range"
-                // defaultMonth={defaultMonth}
-                selected={eventStartAndEndDays}
-                onSelect={setEventStartAndEndDays}
+                selected={props.eventStartAndEndDates}
+                onSelect={props.setEventStartAndEndDates}
               />
             </div>
           </div>
@@ -52,6 +56,7 @@ function DestinationAndDateStep(props: DestinationAndDateStepProps) {
         <div className="flex items-center gap-2 flex-1">
           <MapPin className="size-5 text-zinc-400" />
           <input
+            onChange={(event) => props.setDestination(event.target.value)}
             disabled={props.isGuestInputOpen}
             type="text"
             placeholder="Para onde você vai?"
@@ -61,7 +66,7 @@ function DestinationAndDateStep(props: DestinationAndDateStepProps) {
         <button
           onClick={() => setOpenModal(true)}
           disabled={props.isGuestInputOpen}
-          className="flex items-center gap-2 text-left w-[260px]"
+          className="flex items-center gap-2 text-left w-[20rem]"
         >
           <Calendar className="size-5 text-zinc-400" />
           <span className="bg-transparent text-lg text-zinc-400 outline-none w-32 flex-1">

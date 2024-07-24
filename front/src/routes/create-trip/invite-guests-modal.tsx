@@ -54,7 +54,7 @@ function InviteGuestsModal(props: InviteGuestsModalProps) {
               type="email"
               name="email"
               placeholder="Digite o email do convidado"
-              className="bg-transparent text-lg placeholder:text-zinc-400 outline-none flex-1"
+              className="bg-transparent text-lg placeholder:text-zinc-400 outline-none border-none flex-1"
             />
             <button
               //   onClick={props.addNewEmailToInvite}

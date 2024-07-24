@@ -5,6 +5,8 @@ interface ConfirmTripModalProps {
   closeConfirmedModalTrip: () => void;
   // addNewEmailToInvite: (event: FormEvent<HTMLFormElement>) => void;
   createTrip: (event: FormEvent<HTMLFormElement>) => void;
+  setOwnerName: (name: string) => void;
+  setOwnerEmail: (email: string) => void;
 }
 
 function ConfirmTripModal(props: ConfirmTripModalProps) {
@@ -44,19 +46,21 @@ function ConfirmTripModal(props: ConfirmTripModalProps) {
             <div className="flex gap-2 items-center p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
               <User className="text-zinc-400 size-5 ms-2" />
               <input
+                onChange={(event) => props.setOwnerEmail(event.target.value)}
                 type="text"
                 name="name"
                 placeholder="Seu nome completo"
-                className="bg-transparent text-lg placeholder:text-zinc-400 outline-none flex-1"
+                className="bg-transparent text-lg placeholder:text-zinc-400 outline-none border-none flex-1"
               />
             </div>
             <div className="flex gap-2 items-center p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
               <AtSign className="text-zinc-400 size-5 ms-2" />
               <input
+                onChange={(event) => props.setOwnerName(event.target.value)}
                 type="email"
                 name="email"
                 placeholder="Seu email pessoal"
-                className="bg-transparent text-lg placeholder:text-zinc-400 outline-none flex-1"
+                className="bg-transparent text-lg placeholder:text-zinc-400 outline-none border-none flex-1"
               />
             </div>
             <button

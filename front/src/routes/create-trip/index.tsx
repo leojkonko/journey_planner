@@ -62,10 +62,23 @@ function CreateTripPage() {
     );
     setEmailsToInvite(newEmailList);
   }
+
+  //envio de dados para api
+  const [destination, setDestination] = useState("");
+  const [ownerName, setOwnerName] = useState("");
+  const [ownerEmail, setOwnerEmail] = useState("");
+  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
+    DateRange | undefined
+  >();
+
   function createTrip(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    navigate("/trips/123");
+    console.log(destination);
+    console.log(ownerName);
+    console.log(ownerEmail);
+    console.log(eventStartAndEndDates);
+    console.log(emailsToInvite);
+    // navigate("/trips/123");
   }
 
   return (
@@ -84,6 +97,9 @@ function CreateTripPage() {
               closeGuestInput={closeGuestInput}
               isGuestInputOpen={isGuestInputOpen}
               openGuestInput={openGuestInput}
+              setDestination={setDestination}
+              eventStartAndEndDates={eventStartAndEndDates}
+              setEventStartAndEndDates={setEventStartAndEndDates}
             />
 
             {isGuestInputOpen && (
@@ -97,11 +113,11 @@ function CreateTripPage() {
           <p className="text-sm text-zinc-500">
             Ao planejar sua viagem pela plann.er você automaticamente concorda
             <br />
-            com nossos
+            com nossos{" "}
             <a href="" className="text-zinc-300 underline">
               termos de uso
-            </a>
-            e
+            </a>{" "}
+            e{" "}
             <a href="" className="text-zinc-300 underline">
               políticas de privacidade.
             </a>
@@ -119,6 +135,8 @@ function CreateTripPage() {
           <ConfirmTripModal
             closeConfirmedModalTrip={closeConfirmedModalTrip}
             createTrip={createTrip}
+            setOwnerName={setOwnerName}
+            setOwnerEmail={setOwnerEmail}
           />
         )}
       </div>
