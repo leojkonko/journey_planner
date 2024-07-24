@@ -1,16 +1,4 @@
-import { Modal } from "flowbite-react";
-import {
-  Calendar,
-  CircleCheck,
-  CircleDashed,
-  Link2,
-  MapPin,
-  Plus,
-  Settings2,
-  Tag,
-  UserCog,
-  X,
-} from "lucide-react";
+import { Calendar, MapPin, Settings2 } from "lucide-react";
 
 interface DestinationAndDateHeaderProps {}
 

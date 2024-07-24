@@ -1,5 +1,4 @@
-import { Modal } from "flowbite-react";
-import { Calendar, Link2, Plus, Tag, X } from "lucide-react";
+import { Link2, Plus } from "lucide-react";
 
 interface ImportantLinksProps {}
 

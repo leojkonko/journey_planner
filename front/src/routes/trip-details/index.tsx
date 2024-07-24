@@ -26,6 +26,9 @@ function TripDetailsPage() {
       />
 
       <div className="max-w-6xl px-6 py-10 mx-auto space-y-8">
+        <a href="/" className="flex justify-center">
+          <img src="/logo.svg" alt="plann.er" />
+        </a>
         <DestinationAndDateHeader />
         <main className="flex flex-col lg:flex-nowrap gap-16 lg:flex-row pt-4 px-6">
           <div className="w-100 lg:w-8/12 space-y-8">

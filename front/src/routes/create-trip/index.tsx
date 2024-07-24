@@ -4,6 +4,7 @@ import InviteGuestsModal from "./invite-guests-modal";
 import ConfirmTripModal from "./confirm-trip-modal";
 import DestinationAndDateStep from "./steps/destination-and-date-step";
 import InviteGuestsStep from "./steps/invite-guests-step";
+import { DateRange } from "react-day-picker";
 
 function CreateTripPage() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ function CreateTripPage() {
 
     navigate("/trips/123");
   }
+
   return (
     <>
       <div className="h-screen flex items-center justify-center bg-pattern bg-no-repeat bg-center">

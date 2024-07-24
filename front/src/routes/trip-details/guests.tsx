@@ -1,14 +1,4 @@
-import { Modal } from "flowbite-react";
-import {
-  Calendar,
-  CircleCheck,
-  CircleDashed,
-  Link2,
-  Plus,
-  Tag,
-  UserCog,
-  X,
-} from "lucide-react";
+import { CircleCheck, CircleDashed, UserCog } from "lucide-react";
 
 interface GuestsProps {}
 
