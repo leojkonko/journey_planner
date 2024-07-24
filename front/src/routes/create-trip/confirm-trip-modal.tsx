@@ -46,7 +46,7 @@ function ConfirmTripModal(props: ConfirmTripModalProps) {
             <div className="flex gap-2 items-center p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
               <User className="text-zinc-400 size-5 ms-2" />
               <input
-                onChange={(event) => props.setOwnerEmail(event.target.value)}
+                onChange={(event) => props.setOwnerName(event.target.value)}
                 type="text"
                 name="name"
                 placeholder="Seu nome completo"
@@ -56,7 +56,7 @@ function ConfirmTripModal(props: ConfirmTripModalProps) {
             <div className="flex gap-2 items-center p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
               <AtSign className="text-zinc-400 size-5 ms-2" />
               <input
-                onChange={(event) => props.setOwnerName(event.target.value)}
+                onChange={(event) => props.setOwnerEmail(event.target.value)}
                 type="email"
                 name="email"
                 placeholder="Seu email pessoal"

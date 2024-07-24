@@ -17,10 +17,6 @@ interface DestinationAndDateStepProps {
 function DestinationAndDateStep(props: DestinationAndDateStepProps) {
   const [openModal, setOpenModal] = useState(false);
 
-  // const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
-  //   DateRange | undefined
-  // >();
-
   const displayedDate =
     props.eventStartAndEndDates &&
     props.eventStartAndEndDates.from &&
