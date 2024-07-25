@@ -18,13 +18,13 @@ interface Guests {
 
 function Guests() {
   const { tripId } = useParams();
-  const [participants, setParticipants] = useState<Guests[]>();
+  const [participants, setParticipants] = useState<Guests[]>([]);
 
   useEffect(() => {
     api
-      .get(`/trips/${tripId}/participants`)
+      .get(`trips/${tripId}/participants`)
       .then((response) => setParticipants(response.data.participants));
-  }, [participants]);
+  }, [tripId]);
   return (
     <>
       <div className="space-y-4">

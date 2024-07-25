@@ -1,5 +1,8 @@
 import { Modal } from "flowbite-react";
 import { Calendar, Tag, X } from "lucide-react";
+import { FormEvent } from "react";
+import { api } from "../../lib/axios";
+import { useParams } from "react-router-dom";
 
 interface createActivityModalProps {
   createActivity: boolean;
@@ -7,6 +10,23 @@ interface createActivityModalProps {
 }
 
 function createActivityModal(props: createActivityModalProps) {
+  const { tripId } = useParams();
+
+  async function createActivity(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+
+    const title = data.get("title")?.toString();
+    const occurs_at = data.get("occurs_at")?.toString();
+
+    await api.post(`/trips/${tripId}/activities`, {
+      title: title,
+      accurs_at: occurs_at,
+    });
+    window.document.location.reload();
+  }
+
   return (
     <>
       <Modal
@@ -32,14 +52,14 @@ function createActivityModal(props: createActivityModalProps) {
 
             <div className="flex flex-wrap gap-2 items-center w-full">
               <form
-                action=""
+                onSubmit={createActivity}
                 className="p-2.5  flex flex-col items-center gap-2 w-full"
               >
                 <div className="bg-zinc-950 border border-zinc-800 rounded-lg flex items-center px-4 py-1 w-full">
                   <Tag className="text-zinc-400 size-5" />
                   <input
-                    type="email"
-                    name="email"
+                    type="text"
+                    name="title"
                     placeholder="Qual a atividade?"
                     className="bg-transparent text-lg placeholder:text-zinc-400 outline-none border-none w-full"
                   />

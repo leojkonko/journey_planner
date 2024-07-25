@@ -15,6 +15,7 @@ import CreateActivityModal from "./create-activity-modal";
 import ImportantLinks from "./important-links";
 import Guests from "./guests";
 import DestinationAndDateHeader from "./destination-and-date-header";
+import Activities from "./activities";
 
 function TripDetailsPage() {
   const [createActivity, setCreateActivity] = useState(false);
@@ -43,43 +44,7 @@ function TripDetailsPage() {
               </button>
             </div>
             <div className="space-y-6">
-              <div className="space-y-2.5">
-                <div className="flex gap-2 items-baseline">
-                  <span className="text-xl font-bold text-zinc-300">
-                    Dia 17
-                  </span>
-                  <span className="text-xs text-zinc-500">Sábado</span>
-                </div>
-                <p className="text-zinc-500">
-                  Nenhuma atividade cadastrada nessa data.
-                </p>
-              </div>
-              <div className="space-y-2.5">
-                <div className="flex gap-2 items-baseline">
-                  <span className="text-xl font-bold text-zinc-300">
-                    Dia 18
-                  </span>
-                  <span className="text-xs text-zinc-500">Domingo</span>
-                </div>
-                <div className="space-y-2.5">
-                  <div className="rounded-xl shadow-shape p-4 bg-zinc-900 flex items-center gap-3">
-                    <div className="text-zinc-100 flex items-center gap-3">
-                      <CircleCheck className="size-5 text-lime-300" />
-                      Academia em grupo
-                    </div>
-                    <div className="text-sm text-zinc-400 ml-auto">08:00</div>
-                  </div>
-                </div>
-                <div className="space-y-2.5">
-                  <div className="rounded-xl shadow-shape p-4 bg-zinc-900 flex items-center gap-3">
-                    <div className="text-zinc-100 flex items-center gap-3">
-                      <CircleCheck className="size-5 text-lime-300" />
-                      Academia em grupo
-                    </div>
-                    <div className="text-sm text-zinc-400 ml-auto">08:00</div>
-                  </div>
-                </div>
-              </div>
+              <Activities />
             </div>
           </div>
           <div className="w-100 lg:w-4/12 space-y-6">
