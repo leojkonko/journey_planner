@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import { api } from "../../lib/axios";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
+import { Modal } from "flowbite-react";
+import AlterTripDataModal from "./alter-trip-data-modal";
+import { DateRange } from "react-day-picker";
 
 interface Trip {
   destination: string;
@@ -15,6 +18,10 @@ interface Trip {
 function DestinationAndDateHeader() {
   const { tripId } = useParams();
   const [trip, setTrip] = useState<Trip | undefined>();
+  const [openModal, setOpenModal] = useState(true);
+  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
+    DateRange | undefined
+  >();
 
   useEffect(() => {
     api.get(`trips/${tripId}`).then((response) => setTrip(response.data.trip));
@@ -38,12 +45,21 @@ function DestinationAndDateHeader() {
             <Calendar className="size-5 text-zinc-400" />
             <span className="text-zinc-100">{displayedDate}</span>
           </div>
-          <button className="flex items-center gap-2 bg-zinc-800 px-4 py-3 rounded-lg hover:bg-zinc-700">
+          <button
+            onClick={() => setOpenModal(true)}
+            className="flex items-center gap-2 bg-zinc-800 px-4 py-3 rounded-lg hover:bg-zinc-700"
+          >
             <Settings2 className="size-5 text-zinc-200" />
             <span className="text-zinc-100">Alterar local/data</span>
           </button>
         </div>
       </div>
+      <AlterTripDataModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        setEventStartAndEndDates={setEventStartAndEndDates}
+        eventStartAndEndDates={eventStartAndEndDates}
+      />
     </>
   );
 }
