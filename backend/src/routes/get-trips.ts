@@ -18,7 +18,7 @@ export async function getTrips(app: FastifyInstance) {
     async (request) => {
       //   const { tripId } = request.params;
 
-      const trip = await prisma.trip.findMany({});
+      const trip = await prisma.trip.findMany();
       console.log(trip);
       if (!trip) {
         throw new ClientError("Trip not found");
