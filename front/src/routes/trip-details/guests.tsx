@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../lib/axios";
+// import InviteGuestModal from "./invite-guest-modal";
 
 interface Guests {
   name: string | null;
@@ -19,6 +20,7 @@ interface Guests {
 function Guests() {
   const { tripId } = useParams();
   const [participants, setParticipants] = useState<Guests[]>([]);
+  const [openModal, setOpenModal] = useState(true);
 
   useEffect(() => {
     api
@@ -51,22 +53,15 @@ function Guests() {
             </div>
           );
         })}
-        {/* <div className="flex items-center justify-between">
-          <div className="flex flex-col w-10/12 space-y-1.5">
-            Rita Pacocha
-            <span className="text-zinc-500 text-sm truncate">
-              lacy.stiedemann@gmail.com
-            </span>
-          </div>
-          <div className="w-2/12 flex justify-end">
-            <CircleCheck className="size-5 text-lime-300 shrink-0" />
-          </div>
-        </div> */}
-        <button className="bg-zinc-800 hover:bg-zinc-700 text-zinc-100 flex items-center px-4 py-3 rounded-lg gap-2 justify-center w-full">
+        <button
+          onClick={() => setOpenModal(true)}
+          className="bg-zinc-800 hover:bg-zinc-700 text-zinc-100 flex items-center px-4 py-3 rounded-lg gap-2 justify-center w-full"
+        >
           <UserCog className="size-5 text-zinc-100" />
-          Confirmar atividades
+          Convidar participante
         </button>
       </div>
+      {/* <InviteGuestModal setOpenModal={setOpenModal} openModal={openModal} /> */}
     </>
   );
 }
