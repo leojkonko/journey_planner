@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../lib/axios";
-// import InviteGuestModal from "./invite-guest-modal";
+import InviteGuestModal from "./create-guest-invite-modal";
 
 interface Guests {
   name: string | null;
@@ -20,7 +20,7 @@ interface Guests {
 function Guests() {
   const { tripId } = useParams();
   const [participants, setParticipants] = useState<Guests[]>([]);
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     api
@@ -61,7 +61,7 @@ function Guests() {
           Convidar participante
         </button>
       </div>
-      {/* <InviteGuestModal setOpenModal={setOpenModal} openModal={openModal} /> */}
+      <InviteGuestModal setOpenModal={setOpenModal} openModal={openModal} />
     </>
   );
 }

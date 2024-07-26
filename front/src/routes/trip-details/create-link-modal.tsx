@@ -1,5 +1,5 @@
 import { Modal } from "flowbite-react";
-import { AtSign, User, X } from "lucide-react";
+import { AtSign, Link, Text, User, X } from "lucide-react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../lib/axios";
@@ -47,22 +47,22 @@ function CreateLinkModal(props: CreateLinkModalProps) {
               className="flex flex-col w-100 gap-2"
             >
               <div className="flex gap-2 items-center p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
-                <User className="text-zinc-400 size-5 ms-2" />
+                <Text className="text-zinc-400 size-5 ms-2" />
                 <input
                   onChange={(event) => setTitle(event.target.value)}
                   type="text"
                   name="title"
-                  placeholder="Seu nome completo"
+                  placeholder="Título"
                   className="bg-transparent text-lg placeholder:text-zinc-400 outline-none border-none flex-1"
                 />
               </div>
               <div className="flex gap-2 items-center p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
-                <AtSign className="text-zinc-400 size-5 ms-2" />
+                <Link className="text-zinc-400 size-5 ms-2" />
                 <input
                   onChange={(event) => setUrl(event.target.value)}
                   type="url"
                   name="url"
-                  placeholder="Seu email pessoal"
+                  placeholder="Link/URL"
                   className="bg-transparent text-lg placeholder:text-zinc-400 outline-none border-none flex-1"
                 />
               </div>
