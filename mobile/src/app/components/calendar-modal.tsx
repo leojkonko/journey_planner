@@ -1,3 +1,5 @@
+import { colors } from "@/styles/color";
+import { X } from "lucide-react-native";
 import React, { useState } from "react";
 import { Modal, Text, View, TouchableOpacity } from "react-native";
 import { Calendar } from "react-native-calendars";
@@ -5,6 +7,10 @@ import { Calendar } from "react-native-calendars";
 interface CalendarModalProps {
   modalVisible: boolean;
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  onDatesSelected: (dates: {
+    startDate: string | null;
+    endDate: string | null;
+  }) => void;
 }
 
 const CalendarModal = (props: CalendarModalProps) => {
@@ -49,13 +55,17 @@ const CalendarModal = (props: CalendarModalProps) => {
         const formattedDate = currentDate.toISOString().split("T")[0];
         if (formattedDate !== selectedDates.endDate) {
           markedDates[formattedDate] = {
-            color: "#bef264",
+            color: "#a3e635",
             textColor: "black",
           };
         }
       }
     }
     return markedDates;
+  };
+
+  const handleSave = () => {
+    props.onDatesSelected(selectedDates);
   };
 
   return (
@@ -69,13 +79,18 @@ const CalendarModal = (props: CalendarModalProps) => {
     >
       <View className="h-max absolute bottom-0 left-0 w-full justify-center items-center bg-zinc-800 p-8 pb-10">
         <View className="bg-transparent rounded w-full">
-          <View>
-            <Text className="mb-1 text-xl font-bold text-zinc-100">
-              Selecionar datas
-            </Text>
-            <Text className="mb-4 text-zinc-400">
-              Selecione a data de ida e volta da viagem:
-            </Text>
+          <View className="flex flex-row justify-between">
+            <View>
+              <Text className="mb-1 text-xl font-bold text-zinc-100">
+                Selecionar datas
+              </Text>
+              <Text className="mb-4 text-zinc-400">
+                Selecione a data de ida e volta da viagem:
+              </Text>
+            </View>
+            <TouchableOpacity onPress={() => props.setModalVisible(false)}>
+              <X color={colors.zinc[500]} size={20} />
+            </TouchableOpacity>
           </View>
           <Calendar
             onDayPress={handleDayPress}
@@ -104,7 +119,7 @@ const CalendarModal = (props: CalendarModalProps) => {
               textDayHeaderFontSize: 16,
             }}
           />
-          <View className="mt-4">
+          <View className="my-4 space-y-2">
             <Text className="text-center text-zinc-100">
               Data de Início: {selectedDates.startDate || "Não selecionada"}
             </Text>
@@ -113,10 +128,11 @@ const CalendarModal = (props: CalendarModalProps) => {
             </Text>
           </View>
           <TouchableOpacity
-            className="mt-4 p-3 bg-blue-500 rounded"
-            onPress={() => props.setModalVisible(false)}
+            className="mt-4 p-3 bg-lime-400 rounded-lg"
+            // onPress={() => props.setModalVisible(false)}
+            onPress={handleSave}
           >
-            <Text className="text-white text-center">Fechar Modal</Text>
+            <Text className="text-zinc-900 text-center">Confirmar</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -20,6 +20,15 @@ import CalendarModal from "./components/calendar-modal";
 export default function Index() {
   const [destination, setDestination] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDates, setSelectedDates] = useState({
+    startDate: null,
+    endDate: null,
+  });
+
+  const handleDatesSelected = (dates: any) => {
+    setSelectedDates(dates);
+    setModalVisible(false);
+  };
 
   return (
     <>
@@ -56,9 +65,18 @@ export default function Index() {
               <Text className="text-lg text-zinc-600">Quando?</Text>
             </TouchableOpacity>
             <CalendarModal
+              onDatesSelected={handleDatesSelected}
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
             />
+            <View className="mt-4">
+              <Text className="text-white">
+                Data de Início: {selectedDates.startDate || "Não selecionada"}
+              </Text>
+              <Text className="text-white">
+                Data Final: {selectedDates.endDate || "Não selecionada"}
+              </Text>
+            </View>
           </View>
           <TouchableOpacity className="bg-lime-400 flex w-full items-center space-x-2  flex-row justify-center py-3 rounded-lg">
             <Text className="text-zinc-900 text-lg">Continuar</Text>
