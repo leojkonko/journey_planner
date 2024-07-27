@@ -15,11 +15,11 @@ import { Link } from "expo-router";
 import { ArrowRight, Calendar, MapPin } from "lucide-react-native";
 import React, { useState } from "react";
 import { colors } from "@/styles/color";
-import CalendarDate from "./components/calendar";
+import CalendarModal from "./components/calendar-modal";
 
 export default function Index() {
   const [destination, setDestination] = React.useState("");
-  //   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <>
@@ -34,8 +34,7 @@ export default function Index() {
         <Text className="text-zinc-400 text-center text-lg mt-3">
           Convide seus amigos e planeje sua{"\n"}próxima viagem
         </Text>
-
-        <View className="w-full bg-zinc-900 py-3 px-4 space-y-4 rounded-xl my-8 border border-zinc-800">
+        <View className="w-full bg-zinc-900 py-3 px-4 space-y-5 rounded-xl my-8 border border-zinc-800">
           <View className="flex w-100 flex-row items-end space-x-2">
             <MapPin color={colors.zinc[500]} size={20} />
             <TextInput
@@ -45,14 +44,21 @@ export default function Index() {
               value={destination}
             ></TextInput>
           </View>
-          <View className="flex w-100 flex-row items-end space-x-2 mb-2">
+          <View className="flex w-100 flex-row items-center space-x-2 mb-1">
             <Calendar color={colors.zinc[500]} size={20} />
-            <TextInput
-              className="text-lg text-zinc-100 placeholder:text-zinc-400 flex-1"
-              placeholder="Quando?"
-              onChangeText={setDestination}
-              value={destination}
-            ></TextInput>
+            <TouchableOpacity
+              className="flex-1 flex flex-row"
+              // placeholder="Quando?"
+              // onChangeText={setDestination}
+              // value={destination}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text className="text-lg text-zinc-600">Quando?</Text>
+            </TouchableOpacity>
+            <CalendarModal
+              modalVisible={modalVisible}
+              setModalVisible={setModalVisible}
+            />
           </View>
           <TouchableOpacity className="bg-lime-400 flex w-full items-center space-x-2  flex-row justify-center py-3 rounded-lg">
             <Text className="text-zinc-900 text-lg">Continuar</Text>
