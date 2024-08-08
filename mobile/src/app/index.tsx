@@ -7,28 +7,163 @@ import {
   //   Button,
   TouchableOpacity,
   Modal,
-  Alert,
   Pressable,
+  Alert,
 } from "react-native";
 import { NativeWindStyleSheet } from "nativewind";
-import { Link } from "expo-router";
-import { ArrowRight, Calendar, MapPin } from "lucide-react-native";
+import { Link, router } from "expo-router";
+import {
+  ArrowRight,
+  Calendar,
+  MapPin,
+  Settings2,
+  User2,
+} from "lucide-react-native";
+import dayjs from "dayjs";
 import React, { useState } from "react";
 import { colors } from "@/styles/color";
 import CalendarModal from "./components/calendar-modal";
+import { format } from "date-fns";
+import InviteGuestsModal from "./components/guest-invite-modal";
+import { tripStorage } from "@/storage/trip";
+import { tripServer } from "@/server/trip-server";
+import { api } from "@/server/api";
+import axios from "axios";
+// import { ptBR } from "date-fns/locale";
 
 export default function Index() {
   const [destination, setDestination] = React.useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [guestInviteVisible, setGuestInviteVisible] = useState(false);
   const [selectedDates, setSelectedDates] = useState({
     startDate: null,
     endDate: null,
   });
+  const [inviteGuests, setInviteGuests] = useState(false);
+  const [emailsToInvite, setEmailsToInvite] = useState<string[]>([]);
+
+  //loading
+  const [isCreatingTrip, setIsCreatingTrip] = useState(false);
 
   const handleDatesSelected = (dates: any) => {
     setSelectedDates(dates);
     setModalVisible(false);
   };
+
+  const formatDate = (date: string) => {
+    if (!date) return "Não selecionada";
+
+    const options = { day: "2-digit", month: "short" };
+    const formattedDate = new Date(date).toLocaleDateString("pt-BR", options);
+    return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+  };
+
+  function TripDestination() {
+    if (
+      destination.trim().length === 0 ||
+      !selectedDates.startDate ||
+      !selectedDates.endDate
+    ) {
+      return Alert.alert(
+        "Detalhes da viagem",
+        "Preencha todos as informações da viagem para seguir."
+      );
+    }
+
+    if (destination.length < 4) {
+      return Alert.alert(
+        "Detalhes da viagem",
+        "O destino deve ter pelo menos 4 caracteres."
+      );
+    }
+    return setInviteGuests(true);
+  }
+
+  function loadingCreateTrip() {
+    return Alert.alert("Nova viagem", "Confirmar viagem?", [
+      {
+        text: "Não",
+        style: "cancel",
+      },
+      {
+        text: "Sim",
+        onPress: createTrip,
+      },
+    ]);
+  }
+  async function createTrip() {
+    try {
+      setIsCreatingTrip(true);
+      console.log("Iniciando a requisição GET para /trips");
+      const response = await api.get("/trips");
+      console.log("Resposta da requisição GET:", response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Erro na requisição GET:",
+          error.response?.data || error.message
+        );
+      } else {
+        console.error("Erro desconhecido na requisição GET:", error);
+      }
+    } finally {
+      setIsCreatingTrip(false);
+    }
+
+    return;
+    try {
+      console.log("enrou2");
+      setIsCreatingTrip(true);
+      console.log("enrou3");
+      // const newTrip = await tripServer.create({
+      //   destination,
+      //   starts_at: dayjs(selectedDates.startDate).toString(),
+      //   ends_at: dayjs(selectedDates.endDate).toString(),
+      //   emails_to_invite: emailsToInvite,
+      // });
+
+      // const { data } = await api.post<{ tripId: string }>("/trips", {
+      //   destination: destination,
+      //   starts_at: dayjs(selectedDates.startDate).toString(),
+      //   ends_at: dayjs(selectedDates.endDate).toString(),
+      //   emails_to_invite: emailsToInvite,
+      //   owner_name: "Rodrigo Gonçalves",
+      //   owner_email: "rodrigo.rgtic@gmail.com",
+      // });
+
+      // return data;
+      const data = await api.get("/trips");
+
+      console.log("Resposta recebida da requisição GET para /trips:", data);
+
+      console.log("Executou a função createTrip com sucesso");
+
+      // Alert.alert("Nova viagem", "Viagem criada com sucesso!", [
+      //   {
+      //     text: "ok, continuar",
+      //     onPress: () => saveTrip(newTrip.tripId),
+      //   },
+      // ]);
+    } catch (error) {
+      console.error("Erro ao criar viagem:", error);
+    } finally {
+      console.log("Definindo isCreatingTrip para false no finally");
+      setIsCreatingTrip(false);
+    }
+  }
+
+  async function saveTrip(tripId: string) {
+    try {
+      await tripStorage.save(tripId);
+      router.navigate("/trip/" + tripId);
+    } catch (error) {
+      Alert.alert(
+        "Salvar vaigem",
+        "não foi possível salvar o id da viagem no dispositivo"
+      );
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -47,7 +182,8 @@ export default function Index() {
           <View className="flex w-100 flex-row items-end space-x-2">
             <MapPin color={colors.zinc[500]} size={20} />
             <TextInput
-              className="text-lg text-zinc-100 placeholder:text-zinc-400 flex-1"
+              className="text-lg text-zinc-100 flex-1"
+              editable={!inviteGuests}
               placeholder="Para onde?"
               onChangeText={setDestination}
               value={destination}
@@ -56,32 +192,85 @@ export default function Index() {
           <View className="flex w-100 flex-row items-center space-x-2 mb-1">
             <Calendar color={colors.zinc[500]} size={20} />
             <TouchableOpacity
+              disabled={inviteGuests}
               className="flex-1 flex flex-row"
-              // placeholder="Quando?"
-              // onChangeText={setDestination}
-              // value={destination}
               onPress={() => setModalVisible(true)}
             >
-              <Text className="text-lg text-zinc-600">Quando?</Text>
+              <View className="text-zinc-400 text-lg">
+                {selectedDates.startDate && selectedDates.endDate ? (
+                  <Text className="text-zinc-100 text-lg">
+                    {formatDate(selectedDates.startDate)} até{" "}
+                    {formatDate(selectedDates.endDate)}
+                  </Text>
+                ) : (
+                  <Text className="text-zinc-400 text-lg">Quando?</Text>
+                )}
+              </View>
             </TouchableOpacity>
             <CalendarModal
               onDatesSelected={handleDatesSelected}
               modalVisible={modalVisible}
               setModalVisible={setModalVisible}
             />
-            <View className="mt-4">
-              <Text className="text-white">
-                Data de Início: {selectedDates.startDate || "Não selecionada"}
-              </Text>
-              <Text className="text-white">
-                Data Final: {selectedDates.endDate || "Não selecionada"}
-              </Text>
-            </View>
           </View>
-          <TouchableOpacity className="bg-lime-400 flex w-full items-center space-x-2  flex-row justify-center py-3 rounded-lg">
-            <Text className="text-zinc-900 text-lg">Continuar</Text>
-            <ArrowRight color={colors.zinc[900]} size={20} />
-          </TouchableOpacity>
+          {inviteGuests ? (
+            <>
+              <View className="my-4">
+                <TouchableOpacity
+                  onPress={() => setInviteGuests(false)}
+                  className="bg-zinc-800 rounded-lg w-full flex items-center flex-row justify-center py-3"
+                >
+                  <Text className="text-zinc-100 text-lg mr-2">
+                    Alterar local/data
+                  </Text>
+                  <Settings2 color={colors.zinc[300]} size={20} />
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                className="flex flex-row w-full items-center space-x-2 py-1"
+                onPress={() => setGuestInviteVisible(true)}
+              >
+                <User2 color={colors.zinc[500]} size={20} />
+                {emailsToInvite.length > 0 ? (
+                  <Text className="text-zinc-100 text-lg flex-1">
+                    {emailsToInvite.length} pessoa(s) convidada(s)
+                  </Text>
+                ) : (
+                  <Text className="text-zinc-100 text-lg flex-1">
+                    Quem estará na viagem?
+                  </Text>
+                )}
+              </TouchableOpacity>
+              <InviteGuestsModal
+                guestInviteVisible={guestInviteVisible}
+                setGuestInviteVisible={setGuestInviteVisible}
+                emailsToInvite={emailsToInvite}
+                setEmailsToInvite={setEmailsToInvite}
+              />
+              <TouchableOpacity
+                disabled={isCreatingTrip}
+                onPress={loadingCreateTrip}
+                className="bg-lime-400 flex w-full items-center space-x-2  flex-row justify-center py-3 rounded-lg mt-4"
+              >
+                <Text className="text-zinc-900 text-lg">
+                  {isCreatingTrip ? "Carregando" : "Confirmar viagem"}
+                </Text>
+                <ArrowRight color={colors.zinc[900]} size={20} />
+              </TouchableOpacity>
+            </>
+          ) : (
+            <TouchableOpacity
+              // onPress={TripDestination}-
+              onPress={createTrip}
+              className="bg-lime-400 flex w-full items-center space-x-2  flex-row justify-center py-3 rounded-lg"
+            >
+              <Text className="text-zinc-900 text-lg">
+                {/* Continuar */}
+                {isCreatingTrip ? "Carregando" : "Confirmar viagem"}
+              </Text>
+              <ArrowRight color={colors.zinc[900]} size={20} />
+            </TouchableOpacity>
+          )}
         </View>
         <Text className="text-zinc-500 text-center text-base">
           Ao planejar sua viagem pela plann.er você automaticamente concorda com

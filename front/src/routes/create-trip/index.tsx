@@ -6,6 +6,7 @@ import DestinationAndDateStep from "./steps/destination-and-date-step";
 import InviteGuestsStep from "./steps/invite-guests-step";
 import { DateRange } from "react-day-picker";
 import { api } from "../../lib/axios";
+import Trips from "./trips";
 
 function CreateTripPage() {
   const navigate = useNavigate();
@@ -112,7 +113,7 @@ function CreateTripPage() {
 
   return (
     <>
-      <div className="h-screen flex items-center justify-center bg-pattern bg-no-repeat bg-center">
+      <div className="h-max py-40 flex items-center justify-center bg-pattern bg-no-repeat bg-center">
         <div className="max-w-3xl px-6 text-center space-y-10">
           <div className="flex flex-col items-center gap-3">
             <img src="/logo.svg" alt="plann.er" />
@@ -169,6 +170,7 @@ function CreateTripPage() {
           />
         )}
       </div>
+      <Trips />
     </>
   );
 }

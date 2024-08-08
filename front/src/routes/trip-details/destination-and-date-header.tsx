@@ -18,7 +18,7 @@ interface Trip {
 function DestinationAndDateHeader() {
   const { tripId } = useParams();
   const [trip, setTrip] = useState<Trip | undefined>();
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const [eventStartAndEndDates, setEventStartAndEndDates] = useState<
     DateRange | undefined
   >();
