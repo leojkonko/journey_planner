@@ -9,6 +9,7 @@ import {
   Modal,
   Pressable,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { NativeWindStyleSheet } from "nativewind";
 import { Link, router } from "expo-router";
@@ -20,7 +21,7 @@ import {
   User2,
 } from "lucide-react-native";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { colors } from "@/styles/color";
 import CalendarModal from "./components/calendar-modal";
 import { format } from "date-fns";
@@ -41,6 +42,7 @@ export default function Index() {
   });
   const [inviteGuests, setInviteGuests] = useState(false);
   const [emailsToInvite, setEmailsToInvite] = useState<string[]>([]);
+  const [isGettingTrip, setIsGettingTrip] = useState(true);
 
   //loading
   const [isCreatingTrip, setIsCreatingTrip] = useState(false);
@@ -106,7 +108,7 @@ export default function Index() {
       Alert.alert("Nova viagem", "Viagem criada com sucesso!", [
         {
           text: "OK, Continuar.",
-          // onPress: () => saveTrip(newTrip.tripId),
+          onPress: () => saveTrip(newTrip.tripId),
           // onPress: () => saveTrip("1"),
         },
       ]);
@@ -128,6 +130,31 @@ export default function Index() {
     }
   }
 
+  async function getTrip() {
+    try {
+      const tripID = await tripStorage.get();
+
+      if (!tripID) {
+        return setIsGettingTrip(false);
+      }
+
+      const trip = await tripServer.getById(tripID);
+
+      if (trip) {
+        return router.navigate("/trip/" + trip.id);
+      }
+    } catch (error) {
+      setIsGettingTrip(false);
+    }
+  }
+
+  useEffect(() => {
+    getTrip();
+  }, []);
+
+  if (isGettingTrip) {
+    return <ActivityIndicator />;
+  }
   return (
     <>
       <View className="flex-1 flex items-center h-100 justify-center px-6">
