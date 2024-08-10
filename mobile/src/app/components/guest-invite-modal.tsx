@@ -50,11 +50,6 @@ const InviteGuestsModal = ({
 
     setEmailsToInvite((prevState) => [...prevState, emailToInvite]);
     setEmailToInvite("");
-    // setEmailsToInvite((prevState) =>
-    //   // prevState.filter((email) => email !== emailToRemove)
-
-    // )
-    console.log(emailToInvite);
   }
 
   return (

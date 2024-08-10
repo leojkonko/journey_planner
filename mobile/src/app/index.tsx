@@ -94,61 +94,24 @@ export default function Index() {
   async function createTrip() {
     try {
       setIsCreatingTrip(true);
-      console.log("Iniciando a requisição GET para /trips");
-      const response = await api.get("/trips");
-      console.log("Resposta da requisição GET:", response.data);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error(
-          "Erro na requisição GET:",
-          error.response?.data || error.message
-        );
-      } else {
-        console.error("Erro desconhecido na requisição GET:", error);
-      }
-    } finally {
+
+      const newTrip = await tripServer.create({
+        destination,
+        starts_at: dayjs(selectedDates.startDate).format("YYYY-MM-DD HH:mm:ss"),
+        ends_at: dayjs(selectedDates.endDate).format("YYYY-MM-DD HH:mm:ss"),
+        emails_to_invite: emailsToInvite,
+      });
+
       setIsCreatingTrip(false);
-    }
-
-    return;
-    try {
-      console.log("enrou2");
-      setIsCreatingTrip(true);
-      console.log("enrou3");
-      // const newTrip = await tripServer.create({
-      //   destination,
-      //   starts_at: dayjs(selectedDates.startDate).toString(),
-      //   ends_at: dayjs(selectedDates.endDate).toString(),
-      //   emails_to_invite: emailsToInvite,
-      // });
-
-      // const { data } = await api.post<{ tripId: string }>("/trips", {
-      //   destination: destination,
-      //   starts_at: dayjs(selectedDates.startDate).toString(),
-      //   ends_at: dayjs(selectedDates.endDate).toString(),
-      //   emails_to_invite: emailsToInvite,
-      //   owner_name: "Rodrigo Gonçalves",
-      //   owner_email: "rodrigo.rgtic@gmail.com",
-      // });
-
-      // return data;
-      const data = await api.get("/trips");
-
-      console.log("Resposta recebida da requisição GET para /trips:", data);
-
-      console.log("Executou a função createTrip com sucesso");
-
-      // Alert.alert("Nova viagem", "Viagem criada com sucesso!", [
-      //   {
-      //     text: "ok, continuar",
-      //     onPress: () => saveTrip(newTrip.tripId),
-      //   },
-      // ]);
+      Alert.alert("Nova viagem", "Viagem criada com sucesso!", [
+        {
+          text: "OK, Continuar.",
+          // onPress: () => saveTrip(newTrip.tripId),
+          // onPress: () => saveTrip("1"),
+        },
+      ]);
     } catch (error) {
       console.error("Erro ao criar viagem:", error);
-    } finally {
-      console.log("Definindo isCreatingTrip para false no finally");
-      setIsCreatingTrip(false);
     }
   }
 
@@ -260,14 +223,12 @@ export default function Index() {
             </>
           ) : (
             <TouchableOpacity
-              // onPress={TripDestination}-
-              onPress={createTrip}
+              // onPress={loadingCreateTrip}
+              // onPress={createTrip}
+              onPress={() => setInviteGuests(true)}
               className="bg-lime-400 flex w-full items-center space-x-2  flex-row justify-center py-3 rounded-lg"
             >
-              <Text className="text-zinc-900 text-lg">
-                {/* Continuar */}
-                {isCreatingTrip ? "Carregando" : "Confirmar viagem"}
-              </Text>
+              <Text className="text-zinc-900 text-lg">Continuar</Text>
               <ArrowRight color={colors.zinc[900]} size={20} />
             </TouchableOpacity>
           )}

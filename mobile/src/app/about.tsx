@@ -9,6 +9,9 @@ export default function About() {
       <StatusBar barStyle={"dark-content"} backgroundColor="#000" />
       <View className="flex-1 bg-zinc-950 flex items-center h-100 justify-center">
         <Text className="text-red-500">Hello worlddddd</Text>
+        <Link className="text-white pt-16 bg-red-200 block" href="/trip/ola">
+          Go to index
+        </Link>
         <Image
           source={require("@/assets/logo.svg")}
           className="h-8"

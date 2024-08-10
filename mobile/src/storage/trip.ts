@@ -4,8 +4,11 @@ const TRIP_STORAGE_KEY = "@planner:tripId";
 
 async function save(tripId: string) {
   try {
+    console.log("antes de salvar o id");
     await AsyncStorage.setItem(TRIP_STORAGE_KEY, tripId);
+    console.log("depois de salvar:");
   } catch (error) {
+    console.log("oiii:" + error);
     throw error;
   }
 }

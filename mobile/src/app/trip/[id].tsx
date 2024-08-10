@@ -1,9 +1,13 @@
-import { Text } from "lucide-react-native";
+import { Text, View } from "react-native";
 
 export default function Trip() {
   return (
     <>
-      <Text>OPA</Text>
+      <View className="flex-1 px-5 pt-16">
+        <View>
+          <Text className="text-white">Trip</Text>
+        </View>
+      </View>
     </>
   );
 }
