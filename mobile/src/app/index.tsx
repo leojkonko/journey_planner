@@ -30,6 +30,7 @@ import { tripStorage } from "@/storage/trip";
 import { tripServer } from "@/server/trip-server";
 import { api } from "@/server/api";
 import axios from "axios";
+import Loader from "./loader";
 // import { ptBR } from "date-fns/locale";
 
 export default function Index() {
@@ -153,7 +154,7 @@ export default function Index() {
   }, []);
 
   if (isGettingTrip) {
-    return <ActivityIndicator />;
+    return <Loader />;
   }
   return (
     <>

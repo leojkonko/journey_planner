@@ -2,6 +2,7 @@ import { ActivityIndicator, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { TripDetails } from "@/server/trip-server";
+import Loader from "../loader";
 
 type TripData = TripDetails & { when: string };
 
@@ -14,6 +15,7 @@ export default function Trip() {
 
   async function getTripDetails() {
     try {
+      setIsLoadingTrip(true);
     } catch (error) {
       console.log(error);
     } finally {
@@ -22,13 +24,14 @@ export default function Trip() {
   }
 
   if (isLoadingTrip) {
-    return <ActivityIndicator />;
+    return <Loader />;
   }
 
   return (
     <>
       <View className="flex-1 px-5 pt-16">
         <View>
+          {/* <ActivityIndicator /> */}
           <Text className="text-white">Trip</Text>
         </View>
       </View>
