@@ -12,15 +12,25 @@ import Loader from "../loader";
 import { MapPin, Settings2 } from "lucide-react-native";
 import { colors } from "@/styles/color";
 import dayjs from "dayjs";
+import ModalUpdateTripDetails from "../components/modal-update-trip-details";
+import { useNavigation } from "@react-navigation/native";
 
 type TripData = TripDetails & { when: string };
 
 export default function Trip() {
   // console.log(useLocalSearchParams()); -> ID
   const [isLoadingTrip, setIsLoadingTrip] = useState(true);
+  const [openModalUpdateTripDetails, setOpenModalUpdateTripDetails] =
+    useState(false);
   const [tripDetails, setTripDetails] = useState({} as TripData);
+  const [reload, setReload] = useState(false);
 
   const tripId = useLocalSearchParams<{ id: string }>().id;
+  const validTripId: string = tripId!;
+
+  // const reload = () => {
+  //   window.document.location.reload();
+  // };
 
   async function getTripDetails() {
     try {
@@ -60,6 +70,10 @@ export default function Trip() {
     getTripDetails();
   }, []);
 
+  useEffect(() => {
+    getTripDetails();
+  }, [reload]);
+
   if (isLoadingTrip) {
     return <Loader />;
   }
@@ -81,11 +95,21 @@ export default function Trip() {
             </TextInput>
             <Text className="text-zinc-400 text-sm w-20">{formattedDate}</Text>
             <TouchableOpacity
+              onPress={() => setOpenModalUpdateTripDetails(true)}
               activeOpacity={0.7}
               className="w-9 h-9 bg-zinc-800 items-center justify-center flex rounded"
             >
               <Settings2 color={colors.zinc[500]} size={20} />
             </TouchableOpacity>
+            <ModalUpdateTripDetails
+              // formattedDate={formattedDate}
+              openModalUpdateTripDetails={openModalUpdateTripDetails}
+              setOpenModalUpdateTripDetails={setOpenModalUpdateTripDetails}
+              tripDetails={tripDetails}
+              setTripDetails={setTripDetails}
+              tripId={validTripId}
+              setReload={setReload}
+            />
           </View>
         </View>
       </View>

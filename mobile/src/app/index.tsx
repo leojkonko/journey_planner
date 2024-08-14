@@ -61,26 +61,26 @@ export default function Index() {
     return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
   };
 
-  function TripDestination() {
-    if (
-      destination.trim().length === 0 ||
-      !selectedDates.startDate ||
-      !selectedDates.endDate
-    ) {
-      return Alert.alert(
-        "Detalhes da viagem",
-        "Preencha todos as informações da viagem para seguir."
-      );
-    }
+  // function TripDestination() {
+  //   if (
+  //     destination.trim().length === 0 ||
+  //     !selectedDates.startDate ||
+  //     !selectedDates.endDate
+  //   ) {
+  //     return Alert.alert(
+  //       "Detalhes da viagem",
+  //       "Preencha todos as informações da viagem para seguir."
+  //     );
+  //   }
 
-    if (destination.length < 4) {
-      return Alert.alert(
-        "Detalhes da viagem",
-        "O destino deve ter pelo menos 4 caracteres."
-      );
-    }
-    return setInviteGuests(true);
-  }
+  //   if (destination.length < 4) {
+  //     return Alert.alert(
+  //       "Detalhes da viagem",
+  //       "O destino deve ter pelo menos 4 caracteres."
+  //     );
+  //   }
+  //   return setInviteGuests(true);
+  // }
 
   function loadingCreateTrip() {
     return Alert.alert("Nova viagem", "Confirmar viagem?", [
@@ -194,7 +194,7 @@ export default function Index() {
                     {formatDate(selectedDates.endDate)}
                   </Text>
                 ) : (
-                  <Text className="text-zinc-400 text-lg">Quando?</Text>
+                  <Text className="text-zinc-500 text-lg">Quando?</Text>
                 )}
               </View>
             </TouchableOpacity>
