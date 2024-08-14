@@ -30,7 +30,7 @@ interface ModalUpdateTripDetailsProps {
 export default function ModalUpdateTripDetails(
   props: ModalUpdateTripDetailsProps
 ) {
-  const [newTripDestination, setNewTripDestination] = useState("");
+  var [newTripDestination, setNewTripDestination] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDates, setSelectedDates] = useState({
     startDate: props.tripDetails.starts_at,
@@ -54,6 +54,9 @@ export default function ModalUpdateTripDetails(
 
   async function updateTrip() {
     props.setReload(false);
+    if (!newTripDestination) {
+      newTripDestination = props.tripDetails.destination;
+    }
     try {
       await tripServer.update({
         id: props.tripId,
@@ -63,6 +66,7 @@ export default function ModalUpdateTripDetails(
       });
     } catch (error) {
       console.log(error);
+      // console.log(error.message);
     }
     // props.reload;
     props.setReload(true);
