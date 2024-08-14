@@ -9,7 +9,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { TripDetails, tripServer } from "@/server/trip-server";
 import Loader from "../loader";
-import { MapPin, Settings2 } from "lucide-react-native";
+import { CircleCheck, MapPin, Plus, Settings2 } from "lucide-react-native";
 import { colors } from "@/styles/color";
 import dayjs from "dayjs";
 import ModalUpdateTripDetails from "../components/modal-update-trip-details";
@@ -28,9 +28,11 @@ export default function Trip() {
   const tripId = useLocalSearchParams<{ id: string }>().id;
   const validTripId: string = tripId!;
 
-  // const reload = () => {
-  //   window.document.location.reload();
-  // };
+  const today = new Date();
+  const day = today.getDate(); // Dia do mês
+  const month = today.getMonth() + 1; // Mês (começa em 0, por isso somamos 1)
+  const year = today.getFullYear();
+  const formattedDateToday = `${day}/${month}/${year}`;
 
   async function getTripDetails() {
     try {
@@ -80,7 +82,7 @@ export default function Trip() {
 
   return (
     <>
-      <View className="flex-1 px-5 pt-16">
+      <View className="flex-1 px-5 pt-10">
         <View className="w-full bg-zinc-900 py-3 px-4 space-y-5 rounded-xl my-8 border border-zinc-800">
           <View className="flex w-100 flex-row items-center space-x-2">
             <MapPin color={colors.zinc[500]} size={20} />
@@ -110,6 +112,34 @@ export default function Trip() {
               tripId={validTripId}
               setReload={setReload}
             />
+          </View>
+        </View>
+
+        <View className="space-y-4">
+          <View className="flex justify-between flex-row items-center">
+            <Text className="text-2xl font-bold text-zinc-100">Atividades</Text>
+            <TouchableOpacity className="bg-lime-300 py-2 px-4 space-x-2 rounded-lg flex flex-row items-center">
+              <Text className="text-lg">Nova atividade</Text>
+              <Plus color={colors.zinc[500]} size={20} />
+            </TouchableOpacity>
+          </View>
+          <Text className="text-lg text-zinc-100">
+            Data de hoje: {formattedDateToday}
+          </Text>
+
+          {/* atividades */}
+          <View className="space-y-3">
+            <View className="flex flex-row items-baseline space-x-3">
+              <Text className="text-xl text-zinc-100 font-bold">Dia 17</Text>
+              <Text className="text-sm text-zinc-500">Sábado</Text>
+            </View>
+            <View className="bg-zinc-900 border border-zinc-700 rounded-lg items-center flex flex-row py-2 px-4 space-x-3">
+              <CircleCheck color={colors.lime[300]} size={20} />
+              <Text className="text-zinc-100 text-lg truncate flex-1">
+                Academia
+              </Text>
+              <Text className="text-sm text-zinc-400">08:00h</Text>
+            </View>
           </View>
         </View>
       </View>
