@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -15,6 +16,7 @@ import dayjs from "dayjs";
 import ModalUpdateTripDetails from "../components/modal-update-trip-details";
 import TripDetailsPage from "../components/trip-details";
 import { useNavigation } from "@react-navigation/native";
+import Activities from "../components/activities";
 
 type TripData = TripDetails & { when: string };
 
@@ -107,25 +109,15 @@ export default function Trip() {
               <Plus color={colors.zinc[500]} size={20} />
             </TouchableOpacity>
           </View>
-          <Text className="text-lg text-zinc-100">
+          <Text className="text-lg text-zinc-100 mb-6">
             Data de hoje: {formattedDateToday}
           </Text>
 
           {/* atividades */}
-          <View className="space-y-3">
-            <View className="flex flex-row items-baseline space-x-3">
-              <Text className="text-xl text-zinc-100 font-bold">Dia 17</Text>
-              <Text className="text-sm text-zinc-500">Sábado</Text>
-            </View>
-            <View className="bg-zinc-900 border border-zinc-700 rounded-lg items-center flex flex-row py-2 px-4 space-x-3">
-              <CircleCheck color={colors.lime[300]} size={20} />
-              <Text className="text-zinc-100 text-lg truncate flex-1">
-                Academia
-              </Text>
-              <Text className="text-sm text-zinc-400">08:00h</Text>
-            </View>
-          </View>
         </View>
+        <ScrollView className="mb-8">
+          <Activities />
+        </ScrollView>
       </View>
     </>
   );
