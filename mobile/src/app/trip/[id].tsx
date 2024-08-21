@@ -14,9 +14,10 @@ import { CircleCheck, MapPin, Plus, Settings2 } from "lucide-react-native";
 import { colors } from "@/styles/color";
 import dayjs from "dayjs";
 import ModalUpdateTripDetails from "../components/modal-update-trip-details";
-import TripDetailsPage from "../components/trip-details";
 import { useNavigation } from "@react-navigation/native";
 import Activities from "../components/activities";
+import TripDestination from "../components/trip-details";
+import ModalCreateActivity from "../components/modal-create-activity";
 
 type TripData = TripDetails & { when: string };
 
@@ -25,8 +26,10 @@ export default function Trip() {
   const [isLoadingTrip, setIsLoadingTrip] = useState(true);
   const [openModalUpdateTripDetails, setOpenModalUpdateTripDetails] =
     useState(false);
+  const [openModalCreateActivity, setOpenModalCreateActivity] = useState(false);
   const [tripDetails, setTripDetails] = useState({} as TripData);
   const [reload, setReload] = useState(false);
+  const [reloadActivity, setReloadActivity] = useState(false);
 
   const tripId = useLocalSearchParams<{ id: string }>().id;
   const validTripId: string = tripId!;
@@ -86,7 +89,7 @@ export default function Trip() {
   return (
     <>
       <View className="flex-1 px-5 pt-10">
-        <TripDetailsPage
+        <TripDestination
           tripDetails={tripDetails}
           setTripDetails={setTripDetails}
           formattedDate={formattedDate}
@@ -101,10 +104,27 @@ export default function Trip() {
           tripId={validTripId}
           setReload={setReload}
         />
+        <ModalCreateActivity
+          openModalCreateActivity={openModalCreateActivity}
+          setOpenModalCreateActivity={setOpenModalCreateActivity}
+          tripDetails={tripDetails}
+          setReloadActivity={setReloadActivity}
+          // saveActivity={saveActivity}
+          // formattedDate={formattedDate}
+          // openModalUpdateTripDetails={openModalUpdateTripDetails}
+          // setOpenModalUpdateTripDetails={setOpenModalUpdateTripDetails}
+          // tripDetails={tripDetails}
+          // setTripDetails={setTripDetails}
+          // tripId={validTripId}
+          // setReload={setReload}
+        />
         <View className="space-y-4">
           <View className="flex justify-between flex-row items-center">
             <Text className="text-2xl font-bold text-zinc-100">Atividades</Text>
-            <TouchableOpacity className="bg-lime-300 py-2 px-4 space-x-2 rounded-lg flex flex-row items-center">
+            <TouchableOpacity
+              className="bg-lime-300 py-2 px-4 space-x-2 rounded-lg flex flex-row items-center"
+              onPress={() => setOpenModalCreateActivity(true)}
+            >
               <Text className="text-lg">Nova atividade</Text>
               <Plus color={colors.zinc[500]} size={20} />
             </TouchableOpacity>
@@ -116,7 +136,10 @@ export default function Trip() {
           {/* atividades */}
         </View>
         <ScrollView className="mb-8">
-          <Activities />
+          <Activities
+            reloadActivity={reloadActivity}
+            setReloadActivity={setReloadActivity}
+          />
         </ScrollView>
       </View>
     </>

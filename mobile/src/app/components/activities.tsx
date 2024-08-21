@@ -16,10 +16,8 @@ import "dayjs/locale/pt-br";
 dayjs.locale("pt-br");
 
 interface ActivitiesProps {
-  // tripDetails: TripData;
-  // setTripDetails: React.Dispatch<React.SetStateAction<TripData>>;
-  // formattedDate: string;
-  // setOpenModalUpdateTripDetails: React.Dispatch<React.SetStateAction<boolean>>;
+  reloadActivity: boolean;
+  setReloadActivity: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface Activity {
@@ -30,7 +28,7 @@ interface Activity {
 
 interface DayActivities {
   date: string;
-  activities?: Activity[];
+  activies: Activity[];
 }
 
 export default function Activities(props: ActivitiesProps) {
@@ -38,26 +36,26 @@ export default function Activities(props: ActivitiesProps) {
   const [activities, setActivities] = useState<DayActivities[]>([]);
   async function getActivitiesDetails() {
     try {
-      // setIsLoadingTrip(true);
-      console.log(tripId);
       if (!tripId) {
         return router.back();
       }
 
       const activitiesResponse = await activitiesServer.getActivities(tripId);
-      console.log("atividades = " + activitiesResponse);
       setActivities(activitiesResponse);
-      console.log(activities + " adfaa1111111");
     } catch (error) {
       console.log(error);
-    } finally {
-      // setIsLoadingTrip(false);
     }
   }
 
   useEffect(() => {
     getActivitiesDetails();
   }, []);
+
+  useEffect(() => {
+    getActivitiesDetails();
+    console.log("atualizou");
+    props.setReloadActivity(false);
+  }, [props.reloadActivity]);
 
   return (
     <>
@@ -73,23 +71,18 @@ export default function Activities(props: ActivitiesProps) {
                   {dayjs(activity.date).format("dddd")}
                 </Text>
               </View>
-              {activity.activities && activity.activities.length > 0 ? (
-                activity.activities.map((detail) => (
-                  <View className="bg-zinc-900 border border-zinc-700 rounded-lg items-center flex flex-row py-2 px-4 space-x-3">
+              {activity.activies && activity.activies.length > 0 ? (
+                activity.activies.map((detail) => (
+                  <View
+                    className="bg-zinc-900 border border-zinc-700 rounded-lg items-center flex flex-row py-2 px-4 space-x-3"
+                    key={detail.id}
+                  >
                     <CircleCheck color={colors.lime[300]} size={20} />
                     <Text className="text-zinc-100 text-lg truncate flex-1">
-                      <View
-                        className="bg-zinc-900 border border-zinc-700 rounded-lg items-center flex flex-row py-2 px-4 space-x-3"
-                        key={detail.id}
-                      >
-                        <CircleCheck color={colors.lime[300]} size={20} />
-                        <Text className="text-zinc-100 text-lg truncate flex-1">
-                          {detail.title}
-                        </Text>
-                        <Text className="text-sm text-zinc-400">
-                          {dayjs(detail.accurs_at).format("HH:mm")}h
-                        </Text>
-                      </View>
+                      {detail.title}
+                    </Text>
+                    <Text className="text-sm text-zinc-400">
+                      {dayjs(detail.accurs_at).format("HH:mm")}h
                     </Text>
                   </View>
                 ))

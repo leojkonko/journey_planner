@@ -5,14 +5,14 @@ import { colors } from "@/styles/color";
 
 type TripData = TripDetails & { when: string };
 
-interface TripDetailsPageProps {
+interface TripDestinationProps {
   tripDetails: TripData;
   setTripDetails: React.Dispatch<React.SetStateAction<TripData>>;
   formattedDate: string;
   setOpenModalUpdateTripDetails: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function TripDetailsPage(props: TripDetailsPageProps) {
+export default function TripDestination(props: TripDestinationProps) {
   return (
     <>
       <View className="w-full bg-zinc-900 py-3 px-4 space-y-5 rounded-xl my-8 border border-zinc-800">

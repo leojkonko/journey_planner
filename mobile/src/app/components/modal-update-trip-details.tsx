@@ -79,11 +79,6 @@ export default function ModalUpdateTripDetails(
         animationType="slide"
         transparent={true}
         visible={props.openModalUpdateTripDetails}
-        // onRequestClose={() => {
-        //   props.setOpenModalUpdateTripDetails(
-        //     !props.openModalUpdateTripDetails
-        //   );
-        // }}
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -116,7 +111,6 @@ export default function ModalUpdateTripDetails(
                 className="text-zinc-100 flex-1 text-lg rounded h-12 mb-2"
                 placeholderTextColor="#F4F4F5"
                 placeholder={props.tripDetails.destination}
-                // value={props.tripDetails.destination}
                 onChangeText={(text) => setNewTripDestination(text)}
               ></TextInput>
             </View>
@@ -125,16 +119,11 @@ export default function ModalUpdateTripDetails(
               <TouchableOpacity
                 onPress={() => setModalVisible(true)}
                 className="text-zinc-100 flex items-center text-lg rounded h-12 mb-2"
-                // value={props.tripDetails.destination}
-                // onChangeText={(text) => setEmailToInvite(text.toLowerCase())}
               >
                 <Text className="text-gray-200 text-lg pt-3">
                   {formattedDate}
                 </Text>
               </TouchableOpacity>
-              {/* <TouchableOpacity
-                onPress={() => setModalVisible(true)}
-              ></TouchableOpacity> */}
             </View>
             <CalendarModal
               onDatesSelected={handleDatesSelected}
