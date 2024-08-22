@@ -10,7 +10,13 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { TripDetails, tripServer } from "@/server/trip-server";
 import Loader from "../loader";
-import { CircleCheck, MapPin, Plus, Settings2 } from "lucide-react-native";
+import {
+  CalendarRange,
+  CircleCheck,
+  MapPin,
+  Plus,
+  Settings2,
+} from "lucide-react-native";
 import { colors } from "@/styles/color";
 import dayjs from "dayjs";
 import ModalUpdateTripDetails from "../components/modal-update-trip-details";
@@ -18,6 +24,7 @@ import { useNavigation } from "@react-navigation/native";
 import Activities from "../components/activities";
 import TripDestination from "../components/trip-details";
 import ModalCreateActivity from "../components/modal-create-activity";
+import Navigation from "../components/navigation";
 
 type TripData = TripDetails & { when: string };
 
@@ -135,12 +142,13 @@ export default function Trip() {
 
           {/* atividades */}
         </View>
-        <ScrollView className="mb-8">
+        <ScrollView className="">
           <Activities
             reloadActivity={reloadActivity}
             setReloadActivity={setReloadActivity}
           />
         </ScrollView>
+        <Navigation tripId={tripId} />
       </View>
     </>
   );

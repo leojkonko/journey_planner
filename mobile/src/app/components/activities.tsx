@@ -53,7 +53,6 @@ export default function Activities(props: ActivitiesProps) {
 
   useEffect(() => {
     getActivitiesDetails();
-    console.log("atualizou");
     props.setReloadActivity(false);
   }, [props.reloadActivity]);
 

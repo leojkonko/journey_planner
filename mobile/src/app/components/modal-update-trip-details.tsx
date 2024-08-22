@@ -23,8 +23,6 @@ interface ModalUpdateTripDetailsProps {
   tripDetails: TripData;
   setTripDetails: React.Dispatch<React.SetStateAction<TripData>>;
   tripId: string;
-  // reload: () => void;
-  // formattedDate: string;
 }
 
 export default function ModalUpdateTripDetails(
@@ -36,7 +34,6 @@ export default function ModalUpdateTripDetails(
     startDate: props.tripDetails.starts_at,
     endDate: props.tripDetails.ends_at,
   });
-  // const [selectedDates, setSelectedDates] = useState<any>({});
 
   const handleDatesSelected = (dates: any) => {
     setSelectedDates(dates);

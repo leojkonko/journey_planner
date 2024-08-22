@@ -90,7 +90,6 @@ export default function ModalCreateActivity(props: ModalCreateActivityProps) {
       setHour("");
       props.setOpenModalCreateActivity(false);
       props.setReloadActivity(true);
-      console.log("saiu");
     } catch (error) {}
     return;
   }
