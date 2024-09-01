@@ -93,7 +93,9 @@ export default function Activities(props: ActivitiesProps) {
             </View>
           ))
         ) : (
-          <Text>Nenhuma atividade para este dia.</Text>
+          <Text className="text-zinc-400">
+            Nenhuma atividade para este dia.
+          </Text>
         )}
       </View>
     </>
