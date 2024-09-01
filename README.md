@@ -4,7 +4,7 @@ FIGMA: mobile: https://www.figma.com/design/2KNAK2m4IMGvTLsw7uYl3N/NLW-Journey-%
 FIGMA: web: https://www.figma.com/design/0vsK9Ico7xnljB7x7xsHJO/NLW-Journey-%E2%80%A2-Planejador-de-viagem-(Community)?node-id=3-376&t=lygtzWcf3n1LsiKo-0
  
 
-# URL Shortener
+# JOURNEY PLANNER
 
 This repository contains a URL shortening service that allows users to generate short URLs for long web addresses. The project is divided into three main components: Frontend, API, and Mobile.
 
