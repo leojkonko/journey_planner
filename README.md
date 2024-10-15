@@ -6,7 +6,7 @@ FIGMA: web: https://www.figma.com/design/0vsK9Ico7xnljB7x7xsHJO/NLW-Journey-%E2%
 
 # JOURNEY PLANNER
 
-This repository contains A JOURNEY PLANNER to your next trip organization.
+This repository contains A JOURNEY PLANNER to your next trip organization. 
 
 ## Endpoints Documentation
 
