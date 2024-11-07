@@ -19,7 +19,7 @@ The API endpoints are documented and can be accessed at:
 - **Frontend:** React, Tailwind CSS, Flowbite, TypeScript
 - **Backend:** Node.js, Fastify, TypeScript, Prisma, Zod
 - **Mobile:** React Native, Expo, NativeWind, TypeScript
-- **Database:** SQLite (managed by Prisma)
+- **Database:** SQLite (managed by Prisma) 
 
 ## Installation and Running
 
